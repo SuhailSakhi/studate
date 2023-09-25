@@ -10,9 +10,13 @@ class ProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        show('profile.index');
+    $profile = new Profile();
+    $profile->title = 'My first profile';
+    return view('profile', compact('profile'));
+
     }
 
     /**
