@@ -13,9 +13,8 @@ class ProfileController extends Controller
 
     public function index()
     {
-    $profile = new Profile();
-    $profile->title = 'My first profile';
-    return view('profile', compact('profile'));
+    $profiles = profile::all();
+    return view('profiles.index', compact('profiles'));
 
     }
 
