@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -61,8 +62,19 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(profile $profile)
     {
-        //
+        if (!Auth::check()) {
+            return redirect()->route('home')->with('error', 'Je moet ingelogd zijn om een profiel te verwijderen!');
+        }
+
+        if (Auth::id() !== $profile->users_id) {
+            $profile->delete();
+            return redirect()->route('home')->with('success', 'Profiel verwijderd!');
+
+        } else {
+            return redirect()->route('home')->with('error', 'Profiel niet verwijderd!');
+        }
     }
 }

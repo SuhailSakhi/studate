@@ -10,3 +10,5 @@ class profile extends Model
     protected $fillable = ['image', 'name', 'gender', 'age', 'bio'];
 }
 
+
+

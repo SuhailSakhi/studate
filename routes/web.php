@@ -27,3 +27,7 @@ Route::get('/create',[App\Http\Controllers\CreateController::class, 'create'])->
 
 Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])->name('create');
 
+Route::delete('/profiles/{id}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
+
+
+
