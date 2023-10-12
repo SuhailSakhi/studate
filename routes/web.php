@@ -29,5 +29,9 @@ Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])-
 
 Route::delete('/profiles/{id}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
 
+Route::get('/profiles/{id}/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit.profile');
 
+Route::put('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('update.profile');
+
+Route::get('/profiles/{id}',[App\Http\Controllers\ProfileController::class, 'show'])->name('show.profile');
 

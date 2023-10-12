@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>profiel aanmaken</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
 <form method="POST" action="{{ route('create') }}" enctype="multipart/form-data">
     @csrf
 
@@ -10,7 +19,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="name" class="form-label">Naam</label>
+        <label for "name" class="form-label">Naam</label>
         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required autofocus>
         @error('name')
         <div class="text-danger">{{ $message }}</div>
@@ -49,3 +58,10 @@
         <button type="submit" class="btn btn-primary">Profiel aanmaken</button>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
