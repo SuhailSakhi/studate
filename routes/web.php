@@ -35,3 +35,4 @@ Route::put('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'up
 
 Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'show'])->name('view.profile');
 
+route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');

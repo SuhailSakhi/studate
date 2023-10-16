@@ -14,6 +14,7 @@
                         <p class="card-text">{{$profile->age}}</p>
                         <p class="card-text">{{$profile->bio}}</p>
                         <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
+{{--                        <a href="{{ route('contact') }}" class="btn btn-primary">contact</a>--}}
                     </div>
                 </div>
             </div>
