@@ -38,9 +38,15 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(profile $profile)
+    public function show($id)
     {
-        //
+        $profile = Profile::find($id);
+
+        if (!$profile) {
+            return redirect()->route('home')->with('error', 'Profiel niet gevonden.');
+        }
+
+        return view('view', compact('profile'));
     }
 
     /**

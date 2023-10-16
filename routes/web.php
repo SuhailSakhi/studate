@@ -33,5 +33,5 @@ Route::get('/profiles/{id}/edit', [App\Http\Controllers\ProfileController::class
 
 Route::put('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('update.profile');
 
-Route::get('/profiles/{id}',[App\Http\Controllers\ProfileController::class, 'show'])->name('show.profile');
+Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'show'])->name('view.profile');
 
