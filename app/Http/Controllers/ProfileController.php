@@ -92,12 +92,12 @@ class ProfileController extends Controller
             return redirect()->route('home')->with('error', 'Je moet ingelogd zijn om een profiel te verwijderen!');
         }
 
-        if (Auth::id() !== $profile->$profile_id) {
+        if (Auth::id() !== $profile->user_id) {
             $profile->delete();
             return redirect()->route('home')->with('success', 'Profiel verwijderd!');
-
         } else {
             return redirect()->route('home')->with('error', 'Profiel niet verwijderd!');
         }
     }
+
 }

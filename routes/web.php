@@ -27,11 +27,11 @@ Route::get('/create',[App\Http\Controllers\CreateController::class, 'create'])->
 
 Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])->name('create');
 
-Route::delete('/profiles/{id}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
+Route::delete('/profiles/{profile}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
 
-Route::get('/profiles/{id}/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit.profile');
+Route::get('/profiles/{profile}/{id}/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit.profile');
 
-Route::put('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('update.profile');
+Route::put('/profiles/{profile}/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('update.profile');
 
 Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'show'])->name('view.profile');
 

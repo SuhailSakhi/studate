@@ -9,7 +9,7 @@
 
 <div class="container">
     <h1>Profiel bewerken</h1>
-    <form method="POST" action="{{ route('update.profile', $profile->id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('update.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}">
         @csrf
     @method('PUT')
         <div class="mb-3">
