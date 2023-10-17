@@ -36,3 +36,5 @@ Route::put('/profiles/{profile}/{id}', [App\Http\Controllers\ProfileController::
 Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'show'])->name('view.profile');
 
 route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+
+
