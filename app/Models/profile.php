@@ -10,7 +10,7 @@ class profile extends Model
 //    public mixed $user_id;
     protected ?int $user_id;
 
-    protected $fillable = ['image', 'name', 'gender', 'age', 'bio'];
+    protected $fillable = ['image', 'name', 'gender', 'age', 'bio', 'user_id'];
 }
 
 
