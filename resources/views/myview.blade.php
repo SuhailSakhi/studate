@@ -19,7 +19,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Verwijderen</button>
-{{--                        <a href="{{ route('contact') }}" class="btn btn-primary">contact</a>--}}
+                        {{--                        <a href="{{ route('contact') }}" class="btn btn-primary">contact</a>--}}
                     </div>
                 </div>
             </div>

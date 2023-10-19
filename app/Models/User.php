@@ -31,6 +31,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'user_id'
     ];
 
     /**
@@ -42,4 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
 }

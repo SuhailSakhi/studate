@@ -18,6 +18,8 @@ class CreateProfilesTable extends Migration
             $table->string('image');
             $table->string('age');
             $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+
         });
     }
 

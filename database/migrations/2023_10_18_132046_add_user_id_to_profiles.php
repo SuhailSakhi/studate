@@ -11,7 +11,6 @@ class AddUserIdToProfiles extends Migration
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
         });
     }
 
@@ -21,8 +20,7 @@ class AddUserIdToProfiles extends Migration
     public function down()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+
         });
     }
 }

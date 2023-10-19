@@ -26,13 +26,15 @@
                                     <p class="card-text">{{ $profile->gender }}</p>
                                     <p class="card-text">{{ $profile->age }}</p>
                                     <p class="card-text">{{ $profile->bio }}</p>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between align-items-center">
                                         <a href="{{ route('view.profile', ['id' => $profile->id]) }}" class="btn btn-primary">Bekijk profiel</a>
-                                        <a href="{{ route('edit.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}" class="btn btn-primary">Bewerken</a>
-                                        <form method="POST" action="{{ route('delete.profile', $profile) }}">
+                                        <form method="POST" action="{{ route('like.profile', ['profile' => $profile->id]) }}">
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Verwijderen</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa {{ $profile->isLikedByAuthUser() ? 'fa-heart' : 'fa-heart-o' }}" aria-hidden="true"></i>
+                                                <span class="like-count">{{ $profile->likes_count }}</span>
+                                            </button>
+                                        </form>
                                         </form>
                                     </div>
                                 </div>
@@ -48,3 +50,4 @@
         </div>
     </div>
 @endsection
+

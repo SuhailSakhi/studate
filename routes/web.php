@@ -37,4 +37,7 @@ Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'sh
 
 route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
 
+Route::post('/like/{profile}',[App\Http\Controllers\LikeController::class])->name('like.profile');
+
+Route::delete('/unlike/{profile}',[App\Http\Controllers\LikeController::class])->name('unlike.profile');
 
