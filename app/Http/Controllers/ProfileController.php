@@ -16,8 +16,9 @@ class ProfileController extends Controller
     {
     $profiles = profile::all();
     return view('profiles.index', compact('profiles'));
-
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -60,7 +61,8 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id)
     {
-        $profile = Profile::find($id);
+        $profile = Profile::where('user_id', Auth::id())
+            ->find($id);
 
         // Voer validatie uit voor de bewerkte gegevens
         $this->validate($request, [
@@ -71,6 +73,16 @@ class ProfileController extends Controller
             'age' => 'required|integer|min:18|max:30',
         ]);
 
+        // Controleer of het profiel is gevonden
+        if (!$profile) {
+            return redirect()->route('home')->with('error', 'Profiel niet gevonden!');
+        }
+
+        $imagePath = $request->file('image')->store('/images', 'public');
+        $imagePath = str_replace('images/', '', $imagePath);
+
+        // Sla de bewerkte gegevens op in de database
+        $profile->image = $imagePath;
         $profile->name = $request->input('name');
         $profile->gender = $request->input('gender');
         $profile->age = $request->input('age');
@@ -80,6 +92,7 @@ class ProfileController extends Controller
 
         return redirect()->route('home')->with('success', 'Profiel bijgewerkt!');
     }
+
 
 
     /**
@@ -100,5 +113,15 @@ class ProfileController extends Controller
         }
     }
 
+    public function status(Profile $profile)
+    {
+        // Controleer of de huidige gebruiker gemachtigd is om de status te wijzigen (optioneel)
+        $this->authorize('update', $profile);
+
+        // Wissel de status om
+        $profile->update(['active' => !$profile->active]);
+
+        return back()->with('success', 'Profielstatus gewijzigd.');
+    }
 
 }

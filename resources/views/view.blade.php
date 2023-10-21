@@ -13,13 +13,28 @@
                         <p class="card-text">{{$profile->gender}}</p>
                         <p class="card-text">{{$profile->age}}</p>
                         <p class="card-text">{{$profile->bio}}</p>
+
+                        <form method="POST" action="{{ route('profile.status', ['profile' => $profile->id]) }}">
+                            @csrf
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="toggle_status" id="toggle_status" {{ $profile->active ? 'checked' : '' }}>
+                                <label class="form-check-label" for="toggle_status">
+                                    {{ $profile->active ? 'Actief' : 'Non-actief' }}
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-2">
+                                Opslaan
+                            </button>
+                        </form>
+
                         <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
                         <a href="{{ route('edit.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}" class="btn btn-primary">Bewerken</a>
                         <form method="POST" action="{{ route('delete.profile', $profile) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Verwijderen</button>
-{{--                        <a href="{{ route('contact') }}" class="btn btn-primary">contact</a>--}}
+                        </form>
                     </div>
                 </div>
             </div>

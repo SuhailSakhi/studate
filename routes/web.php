@@ -41,3 +41,6 @@ Route::post('/like/{profile}',[App\Http\Controllers\LikeController::class])->nam
 
 Route::delete('/unlike/{profile}',[App\Http\Controllers\LikeController::class])->name('unlike.profile');
 
+Route::post('/profile/status/{profile}',[App\Http\Controllers\ProfileController::class]  )->name('profile.status');
+
+

@@ -14,7 +14,7 @@
     @method('PUT')
         <div class="mb-3">
             <label for="image" class="form-label">Profielfoto</label>
-            <input type="file" class="form-control" id="image" name="image">
+            <input type="file" class="form-control" id="image" name="image" value="{{$profile->image}}" required>
             @error('image')
             <div class="text-danger">{{ $message }}</div>
             @enderror
