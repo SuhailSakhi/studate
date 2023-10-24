@@ -29,17 +29,13 @@ Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])-
 
 Route::delete('/profiles/{profile}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
 
-Route::get('/profiles/{profile}/{id}/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit.profile');
+Route::get('/profiles/{profile}/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit.profile');
 
-Route::put('/profiles/{profile}/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('update.profile');
+Route::put('/profiles/{profile}/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('update.profile');
 
 Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'show'])->name('view.profile');
 
 route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
-
-Route::post('/like/{profile}',[App\Http\Controllers\LikeController::class])->name('like.profile');
-
-Route::delete('/unlike/{profile}',[App\Http\Controllers\LikeController::class])->name('unlike.profile');
 
 Route::post('/profile/status/{profile}',[App\Http\Controllers\ProfileController::class]  )->name('profile.status');
 

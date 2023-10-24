@@ -28,12 +28,7 @@
                                     <p class="card-text">{{ $profile->bio }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <a href="{{ route('view.profile', ['id' => $profile->id]) }}" class="btn btn-primary">Bekijk profiel</a>
-                                        <form method="POST" action="{{ route('like.profile', ['profile' => $profile->id]) }}">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">
-                                                <i class="fa {{ $profile->isLikedByAuthUser() ? 'fa-heart' : 'fa-heart-o' }}" aria-hidden="true"></i>
-                                                <span class="like-count">{{ $profile->likes_count }}</span>
-                                            </button>
                                         </form>
                                         </form>
                                     </div>

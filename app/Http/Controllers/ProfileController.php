@@ -61,37 +61,38 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id)
     {
-        $profile = Profile::where('user_id', Auth::id())
-            ->find($id);
+        $profile = Profile::where('user_id', Auth::id())->find($id);
 
-        // Voer validatie uit voor de bewerkte gegevens
-        $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // Voer validatie uit voor de bewerkte gegevens, inclusief de image-upload
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
             'bio' => 'required|string',
             'gender' => 'required|in:male,female,other',
             'age' => 'required|integer|min:18|max:30',
         ]);
 
-        // Controleer of het profiel is gevonden
         if (!$profile) {
             return redirect()->route('home')->with('error', 'Profiel niet gevonden!');
         }
 
-        $imagePath = $request->file('image')->store('/images', 'public');
-        $imagePath = str_replace('images/', '', $imagePath);
+        // Als een nieuwe afbeelding is geüpload, sla deze op
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('/images', 'public');
+            $imagePath = str_replace('images/', '', $imagePath);
+            $profile->image = $imagePath;
+        }
 
         // Sla de bewerkte gegevens op in de database
-        $profile->image = $imagePath;
         $profile->name = $request->input('name');
         $profile->gender = $request->input('gender');
         $profile->age = $request->input('age');
         $profile->bio = $request->input('bio');
-
         $profile->save();
 
         return redirect()->route('home')->with('success', 'Profiel bijgewerkt!');
     }
+
 
 
 
@@ -115,7 +116,6 @@ class ProfileController extends Controller
 
     public function status(Profile $profile)
     {
-        // Controleer of de huidige gebruiker gemachtigd is om de status te wijzigen (optioneel)
         $this->authorize('update', $profile);
 
         // Wissel de status om

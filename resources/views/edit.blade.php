@@ -9,12 +9,12 @@
 
 <div class="container">
     <h1>Profiel bewerken</h1>
-    <form method="POST" action="{{ route('update.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}">
+    <form method="POST" action="{{ route('update.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}" enctype="multipart/form-data">
         @csrf
     @method('PUT')
         <div class="mb-3">
             <label for="image" class="form-label">Profielfoto</label>
-            <input type="file" class="form-control" id="image" name="image" value="{{$profile->image}}" required>
+            <input type="file" class="form-control" id="image" name="image" value="{{$profile->image}}">
             @error('image')
             <div class="text-danger">{{ $message }}</div>
             @enderror
