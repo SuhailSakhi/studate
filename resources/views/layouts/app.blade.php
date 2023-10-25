@@ -57,6 +57,8 @@
                                     <a href="{{ route('view.profile', ['id' => Auth::user()->id]) }}" class="dropdown-item">View my profile</a>
                                     <!-- Andere dropdown-items hier indien nodig -->
                                     <div class="dropdown-divider"></div>
+                                    <a href="{{ route('edit.user', ['user' => Auth::user()->id]) }}" class="dropdown-item">Edit user info</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>

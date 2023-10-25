@@ -14,7 +14,14 @@
             </div>
         </form>
         <a href="{{ route('create') }}" class="btn btn-primary mb-3">Profiel aanmaken</a>
+        <br>
+        @auth
+         @if (auth()->user()->role === 'admin')
+                <a href="{{ route('manage') }}" class="btn btn-primary mb-3">Profielen beheren</a>
+            @endif
+        @endauth
         <div class="row">
+
             @if($profiles !== null)
                 @if(count($profiles) > 0)
                     @foreach($profiles as $profile)

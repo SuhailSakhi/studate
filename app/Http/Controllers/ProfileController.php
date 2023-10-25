@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -114,14 +115,32 @@ class ProfileController extends Controller
         }
     }
 
-    public function status(Profile $profile)
+
+    /**
+     * Toggle the specified resource from storage.
+     */
+
+
+    public function manage()
     {
-        $this->authorize('update', $profile);
-
-        // Wissel de status om
-        $profile->update(['active' => !$profile->active]);
-
-        return back()->with('success', 'Profielstatus gewijzigd.');
+        if (Auth::user()->role === 'admin') {
+            $profiles = Profile::all(); // Haal alle profielen op
+            return view('manage', compact('profiles')); // Toon de view met de lijst van profielen
+        } else {
+            return redirect()->route('home')->with('error', 'Alleen beheerders hebben toegang tot deze pagina');
+        }
     }
 
+    public function toggleProfileStatus( Profile $profile)
+    {
+        {
+            // Controleer of de huidige gebruiker een beheerder is
+            if (Auth::user()->role === 'admin') {
+                $profile->status = ($profile->status == 1 ? 0 : 1);
+                $profile->save();
+
+                return redirect()->route('manage')->with('success', 'Profielstatus gewijzigd!');
+            }
+        }
+    }
 }

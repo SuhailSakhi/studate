@@ -21,11 +21,20 @@ Route::get('/profile',[App\Http\Controllers\ProfileController::class, 'index']);
 
 Auth::routes();
 
+Route::get('users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit.user');
+
+Route::put('users/{user}/update', [App\Http\Controllers\UserController::class, 'update'])->name('update.user');
+
+Route::get('/manage', [App\Http\Controllers\ProfileController::class, 'manage'])->name('manage')->middleware('auth');
+
+Route::put('/manage/{profile}/toggleProfileStatus', [App\Http\Controllers\ProfileController::class, 'toggleProfileStatus'])->name('toggleProfileStatus')->middleware('auth');
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/create',[App\Http\Controllers\CreateController::class, 'create'])->name('create');
+Route::get('/create',[App\Http\Controllers\CreateController::class, 'create'])->name('create')->middleware('auth');
 
-Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])->name('create');
+Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])->name('create')-> middleware('auth');
 
 Route::delete('/profiles/{profile}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
 
@@ -35,8 +44,7 @@ Route::put('/profiles/{profile}/update', [App\Http\Controllers\ProfileController
 
 Route::get('/profiles/{id}', [App\Http\Controllers\ProfileController::class, 'show'])->name('view.profile');
 
-route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
 
-Route::post('/profile/status/{profile}',[App\Http\Controllers\ProfileController::class]  )->name('profile.status');
 
 

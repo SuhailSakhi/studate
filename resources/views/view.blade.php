@@ -14,30 +14,45 @@
                         <p class="card-text">{{$profile->age}}</p>
                         <p class="card-text">{{$profile->bio}}</p>
 
-                        <form method="POST" action="{{ route('profile.status', ['profile' => $profile->id]) }}">
-                            @csrf
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="toggle_status" id="toggle_status" {{ $profile->active ? 'checked' : '' }}>
-                                <label class="form-check-label" for="toggle_status">
-                                    {{ $profile->active ? 'Actief' : 'Non-actief' }}
-                                </label>
-                            </div>
+{{--                        <form method="POST" action="{{ route('profile.status', ['profile' => $profile->id]) }}">--}}
+{{--                            @csrf--}}
+{{--                            <div class="form-check form-switch">--}}
+{{--                                @auth--}}
+{{--                                    @if(auth()->user()->id === $profile->user_id || auth()->user()->role === 'admin')--}}
+{{--                                        <input class="form-check-input" type="checkbox" name="toggle_status" id="toggle_status" {{ $profile->active ? 'checked' : '' }}>--}}
+{{--                                    @endif--}}
+{{--                                @endauth--}}
+{{--                                <label class="form-check-label" for="toggle_status">--}}
+{{--                                    {{ $profile->active ? 'Actief' : 'Non-actief' }}--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
 
-                            <button type="submit" class="btn btn-primary mt-2">
-                                Opslaan
-                            </button>
+                            @auth
+                                @if(auth()->user()->id === $profile->user_id || auth()->user()->role === 'admin')
+                                    <button type="submit" class="btn btn-primary mt-2">
+                                        Opslaan
+                                    </button>
+                                @endif
+                            @endauth
                         </form>
 
                         <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
-                        <a href="{{ route('edit.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}" class="btn btn-primary">Bewerken</a>
-                        <form method="POST" action="{{ route('delete.profile', $profile) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Verwijderen</button>
-                        </form>
+
+                        @auth
+                            @if(auth()->user()->id === $profile->user_id || auth()->user()->role === 'admin')
+                                <a href="{{ route('edit.profile', ['profile' => $profile->id, 'id' => $profile->id]) }}" class="btn btn-primary">Bewerken</a>
+                                <form method="POST" action="{{ route('delete.profile', $profile) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Verwijderen</button>
+                                </form>
+                            @endif
+                        @endauth
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+
