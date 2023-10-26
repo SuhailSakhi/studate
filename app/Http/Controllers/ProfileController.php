@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
+
 
 class ProfileController extends Controller
 {
@@ -42,10 +44,10 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profile = Profile::find($id);
+        $profile = Profile::find($id); // Zoek het profiel op basis van het ID
 
         if (!$profile) {
-            return redirect()->route('home')->with('error', 'Profiel niet gevonden.');
+            return redirect()->route('home')->with('error', 'Profiel niet gevonden.'); // Als het profiel niet bestaat, stuur de gebruiker terug naar de homepagina
         }
 
         return view('view', compact('profile'));
@@ -56,7 +58,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = Profile::find($id);
+        $profile = Profile::find($id); // Zoek het profiel op basis van het ID
         return view('edit', compact('profile'));
     }
 
@@ -74,7 +76,7 @@ class ProfileController extends Controller
         ]);
 
         if (!$profile) {
-            return redirect()->route('home')->with('error', 'Profiel niet gevonden!');
+            return redirect()->route('home')->with('error', 'Profiel niet gevonden!'); // Als het profiel niet bestaat, stuur de gebruiker terug naar de homepagina
         }
 
         // Als een nieuwe afbeelding is geüpload, sla deze op
@@ -103,11 +105,11 @@ class ProfileController extends Controller
 
     public function destroy(profile $profile)
     {
-        if (!Auth::check()) {
+        if (!Auth::check()) { // Controleer of de gebruiker is ingelogd
             return redirect()->route('home')->with('error', 'Je moet ingelogd zijn om een profiel te verwijderen!');
         }
 
-        if (Auth::id() !== $profile->user_id) {
+        if (Auth::id() !== $profile->user_id) { // Controleer of de ingelogde gebruiker de eigenaar is van het profiel
             $profile->delete();
             return redirect()->route('home')->with('success', 'Profiel verwijderd!');
         } else {
@@ -123,7 +125,7 @@ class ProfileController extends Controller
 
     public function manage()
     {
-        if (Auth::user()->role === 'admin') {
+        if (Auth::user()->role === 'admin') { // Controleer of de gebruiker een admin is
             $profiles = Profile::all(); // Haal alle profielen op
             return view('manage', compact('profiles')); // Toon de view met de lijst van profielen
         } else {
@@ -134,13 +136,39 @@ class ProfileController extends Controller
     public function toggleProfileStatus( Profile $profile)
     {
         {
-            // Controleer of de huidige gebruiker een beheerder is
-            if (Auth::user()->role === 'admin') {
-                $profile->status = ($profile->status == 1 ? 0 : 1);
-                $profile->save();
+            if (Auth::user()->role === 'admin') { // Controleer of de gebruiker een admin is
+                $profile->is_active = ($profile->is_active == 1 ? 0 : 1); // Toggle de status van het profiel
+                $profile->save(); // Sla de wijziging op in de database
 
                 return redirect()->route('manage')->with('success', 'Profielstatus gewijzigd!');
             }
         }
     }
+
+//    public function likeProfile(Profile $profile)
+//    {
+//        if (Auth::check()) {
+//            // Haal sessie-interactieteller op
+//            $interactionCount = Session::get('interaction_count', 0);
+//
+//            // Controleer of user voldoet aan de interactievereisten
+//            if ($interactionCount >= 5) {
+//                // Voer hier de like-actie uit
+//
+//                // Update de sessie-interactieteller
+//                $interactionCount++;
+//                Session::put('interaction_count', $interactionCount);
+//
+//                return redirect()->back()->with('success', 'Profiel geliket.');
+//            } else {
+//                return redirect()->back()->with('error', 'Je moet minimaal 5 interacties hebben voordat je kunt liken.');
+//            }
+//        } else {
+//            return redirect()->back()->with('error', 'Je moet ingelogd zijn om te kunnen liken.');
+//        }
+//    }
+//
+
+
+
 }

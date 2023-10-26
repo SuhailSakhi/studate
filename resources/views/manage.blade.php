@@ -22,7 +22,7 @@
                                 <td>{{ $profile->name }}</td>
                                 <td>
                                     @if(auth()->user()->role === 'admin')
-                                        @if ($profile->status === 1)
+                                        @if ($profile->is_active === 1)
                                             <form method="POST" action="{{ route('toggleProfileStatus', $profile) }}">
                                                 @csrf
                                                 @method('PUT')

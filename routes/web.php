@@ -29,6 +29,7 @@ Route::get('/manage', [App\Http\Controllers\ProfileController::class, 'manage'])
 
 Route::put('/manage/{profile}/toggleProfileStatus', [App\Http\Controllers\ProfileController::class, 'toggleProfileStatus'])->name('toggleProfileStatus')->middleware('auth');
 
+Route::post('/like/{profile}', [ProfileController::class, 'like'])->name('like.profile')->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -36,7 +37,7 @@ Route::get('/create',[App\Http\Controllers\CreateController::class, 'create'])->
 
 Route::post('/create', [App\Http\Controllers\CreateController::class, 'store'])->name('create')-> middleware('auth');
 
-Route::delete('/profiles/{profile}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile');
+Route::delete('/profiles/{profile}',[App\Http\Controllers\ProfileController::class, 'destroy'])->name('delete.profile')->middleware('auth');
 
 Route::get('/profiles/{profile}/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('edit.profile');
 

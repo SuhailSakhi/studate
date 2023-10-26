@@ -17,6 +17,7 @@ class CreateController extends Controller
 
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',
@@ -35,7 +36,7 @@ class CreateController extends Controller
         $imagePath = str_replace('images/', '', $imagePath);
 
         Profile::create([
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'image' => $imagePath,
             'name' => $request->input('name'),
             'gender' => $request->input('gender'),
@@ -43,7 +44,8 @@ class CreateController extends Controller
             'bio' => $request->input('bio'),
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Profiel aangemaakt!');
     }
+
 }
 

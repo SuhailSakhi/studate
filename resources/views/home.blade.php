@@ -16,15 +16,15 @@
         <a href="{{ route('create') }}" class="btn btn-primary mb-3">Profiel aanmaken</a>
         <br>
         @auth
-         @if (auth()->user()->role === 'admin')
+            @if (auth()->user()->role === 'admin')
                 <a href="{{ route('manage') }}" class="btn btn-primary mb-3">Profielen beheren</a>
             @endif
         @endauth
         <div class="row">
-
             @if($profiles !== null)
                 @if(count($profiles) > 0)
                     @foreach($profiles as $profile)
+                        @if($profile->is_active == 1) <!-- Voeg deze voorwaarde toe om alleen actieve profielen weer te geven -->
                         <div class="col-md-4 mb-4">
                             <div class="card">
                                 <img src="{{ asset('storage/images/' . $profile->image) }}" class="card-img-top" alt="{{ $profile->name }} Image">
@@ -35,13 +35,15 @@
                                     <p class="card-text">{{ $profile->bio }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <a href="{{ route('view.profile', ['id' => $profile->id]) }}" class="btn btn-primary">Bekijk profiel</a>
+                                        <form method="POST" action="{{ route('like.profile', ['profile' => $profile->id]) }}">
                                             @csrf
-                                        </form>
+                                            <button type="submit" class="btn btn-success">Like</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 @else
                     <p>Geen overeenkomsten gevonden.</p>
@@ -52,4 +54,3 @@
         </div>
     </div>
 @endsection
-
