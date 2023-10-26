@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use App\Models\User;
+use App\Models\like;
+use illuminate\Support\session;
+
 
 
 class ProfileController extends Controller
@@ -51,6 +52,7 @@ class ProfileController extends Controller
         }
 
         return view('view', compact('profile'));
+
     }
 
     /**
@@ -103,19 +105,26 @@ class ProfileController extends Controller
      * Remove the specified resource from storage.
      */
 
-    public function destroy(profile $profile)
+    public function destroy(Profile $profile)
     {
-        if (!Auth::check()) { // Controleer of de gebruiker is ingelogd
+        // Controleer of de gebruiker is ingelogd
+        if (!Auth::check()) {
             return redirect()->route('home')->with('error', 'Je moet ingelogd zijn om een profiel te verwijderen!');
         }
 
-        if (Auth::id() !== $profile->user_id) { // Controleer of de ingelogde gebruiker de eigenaar is van het profiel
+        // Haal de rol van de ingelogde gebruiker op
+        $userRole = Auth::user()->roles;
+
+        // Controleer of de ingelogde gebruiker de eigenaar is van het profiel of een beheerder is
+        if ($userRole === 'admin' || Auth::user()->id === $profile->user_id) {
+            // Verwijder het profiel
             $profile->delete();
             return redirect()->route('home')->with('success', 'Profiel verwijderd!');
         } else {
-            return redirect()->route('home')->with('error', 'Profiel niet verwijderd!');
+            return redirect()->route('home')->with('error', 'Profiel niet verwijderd! Je hebt geen toestemming om dit profiel te verwijderen.');
         }
     }
+
 
 
     /**
@@ -145,29 +154,25 @@ class ProfileController extends Controller
         }
     }
 
-//    public function likeProfile(Profile $profile)
-//    {
-//        if (Auth::check()) {
-//            // Haal sessie-interactieteller op
-//            $interactionCount = Session::get('interaction_count', 0);
-//
-//            // Controleer of user voldoet aan de interactievereisten
-//            if ($interactionCount >= 5) {
-//                // Voer hier de like-actie uit
-//
-//                // Update de sessie-interactieteller
-//                $interactionCount++;
-//                Session::put('interaction_count', $interactionCount);
-//
-//                return redirect()->back()->with('success', 'Profiel geliket.');
-//            } else {
-//                return redirect()->back()->with('error', 'Je moet minimaal 5 interacties hebben voordat je kunt liken.');
-//            }
-//        } else {
-//            return redirect()->back()->with('error', 'Je moet ingelogd zijn om te kunnen liken.');
-//        }
-//    }
-//
+    public function like($id)
+    {
+        $profile = Profile::find($id);
+
+        if (!$profile) {
+            return redirect()->route('home')->with('error', 'Profiel niet gevonden.');
+        }
+
+        $user = auth()->user();
+
+        // Voeg de like toe aan de 'likes' tabel
+        Like::create([
+            'user_id' => $user->id,
+            'profile_id' => $profile->id,
+        ]);
+
+        return redirect()->route('home')->with('success', 'Profiel geliket!');
+    }
+
 
 
 

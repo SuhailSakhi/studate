@@ -5,15 +5,15 @@
         <form method="GET" action="{{ route('search') }}" class="mb-4">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Zoek op naam" value="{{ old('search') }}">
-                <select class="form-select" name="gender" id="gender">
-                    <option value="" selected>Alle geslachten</option>
-                    <option value="male">Man</option>
-                    <option value="female">Vrouw</option>
+                <select class="form-select" name "gender" id="gender">
+                <option value="" selected>Alle geslachten</option>
+                <option value="male">Man</option>
+                <option value="female">Vrouw</option>
                 </select>
                 <button type="submit" class="btn btn-primary">Zoeken</button>
             </div>
         </form>
-        <a href="{{ route('create') }}" class="btn btn-primary mb-3">Profiel aanmaken</a>
+        <a href="{{ route('create') }}" class="btn btn-primary mb-3 @if(auth()->user()->likes->count() < 2) disabled @endif">Profiel aanmaken</a>
         <br>
         @auth
             @if (auth()->user()->role === 'admin')
@@ -35,10 +35,20 @@
                                     <p class="card-text">{{ $profile->bio }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <a href="{{ route('view.profile', ['id' => $profile->id]) }}" class="btn btn-primary">Bekijk profiel</a>
-                                        <form method="POST" action="{{ route('like.profile', ['profile' => $profile->id]) }}">
+                                        <form method="POST" action="{{ route('like.profile', ['id' => $profile->id]) }}">
                                             @csrf
-                                            <button type="submit" class="btn btn-success">Like</button>
+                                            <div id="like-notification" class="alert alert-success" style="display: none;">
+                                                Profiel geliket!
+                                            </div>
+                                            <button type="submit" class="btn @if(auth()->user()->likes->contains($profile->id)) unlike-button @else like-button @endif" style="color: black;">
+                                                @if(auth()->user()->likes->contains($profile->id))
+                                                    Unlike
+                                                @else
+                                                    Like
+                                                @endif
+                                            </button>
                                         </form>
+                                        <span class="like-count">{{ $profile->likes->count() }} likes</span>
                                     </div>
                                 </div>
                             </div>

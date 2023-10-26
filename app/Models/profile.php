@@ -18,6 +18,10 @@ class profile extends Model
         return $this->belongsTo(User::class); // Een profiel hoort bij een gebruiker
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'profile_id');
+    }
 }
 
 

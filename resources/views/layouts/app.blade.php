@@ -54,7 +54,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="{{ route('view.profile', ['id' => Auth::user()->id]) }}" class="dropdown-item">View my profile</a>
+                                    <a href="{{ route('view.profile', ['id' => $profile->id]) }}" class="dropdown-item">Bekijk mijn profiel</a>
                                     <!-- Andere dropdown-items hier indien nodig -->
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ route('edit.user', ['user' => Auth::user()->id]) }}" class="dropdown-item">Edit user info</a>
