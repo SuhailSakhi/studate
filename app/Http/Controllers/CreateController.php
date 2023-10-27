@@ -34,7 +34,7 @@ class CreateController extends Controller
             'gender.required' => 'Het geslacht is verplicht.',
             'gender.in' => 'Het geslacht moet man, vrouw of anders zijn.',
             'age.required' => 'De leeftijd is verplicht.',
-            'age.integer' => 'De leeftijd moet een geheel getal zijn.',
+            'age.integer' => 'De leeftijd moet een getal zijn.',
             'age.min' => 'De leeftijd moet minimaal 18 jaar zijn.',
             'age.max' => 'De leeftijd mag niet ouder zijn dan 30 jaar.',
         ]);
